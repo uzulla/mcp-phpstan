@@ -43,51 +43,48 @@ Once you have Claude set up with MCP, you need to configure the MCP PHPStan Inte
 
 Example implementation:
 
-```python
-def send_to_claude(self, message: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Send a message to Claude Code via MCP.
+```php
+public function sendToClaude(array $message): array
+{
+    /**
+     * Send a message to Claude Code via MCP.
+     *
+     * @param array $message MCP message to send
+     * @return array Claude's response
+     */
     
-    Args:
-        message: MCP message to send
-        
-    Returns:
-        Claude's response
-    """
-    import requests
-    import os
-    
-    # Get API key from environment variable
-    api_key = os.environ.get("CLAUDE_API_KEY")
-    if not api_key:
-        raise ValueError("CLAUDE_API_KEY environment variable not set")
-    
-    # Prepare the request
-    headers = {
-        "Content-Type": "application/json",
-        "x-api-key": api_key
+    // Get API key from environment variable
+    $apiKey = getenv('CLAUDE_API_KEY');
+    if (!$apiKey) {
+        throw new \RuntimeException('CLAUDE_API_KEY environment variable not set');
     }
     
-    # Convert the message to the format expected by Claude
-    claude_message = {
-        "model": "claude-3-opus-20240229",
-        "max_tokens": 4000,
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": "Please analyze these PHPStan errors and suggest fixes:"
-                    },
-                    {
-                        "type": "mcp_phpstan_errors",
-                        "mcp_phpstan_errors": message
-                    }
+    // Prepare the request
+    $headers = [
+        'Content-Type' => 'application/json',
+        'x-api-key' => $apiKey
+    ];
+    
+    // Convert the message to the format expected by Claude
+    $claudeMessage = [
+        'model' => 'claude-3-opus-20240229',
+        'max_tokens' => 4000,
+        'messages' => [
+            [
+                'role' => 'user',
+                'content' => [
+                    [
+                        'type' => 'text',
+                        'text' => 'Please analyze these PHPStan errors and suggest fixes:'
+                    ],
+                    [
+                        'type' => 'mcp_phpstan_errors',
+                        'mcp_phpstan_errors' => $message
+                    ]
                 ]
-            }
+            ]
         ]
-    }
+    ];
     
     # Send the request to Claude
     response = requests.post(
@@ -137,7 +134,7 @@ After setting up Claude with MCP, you should test the integration:
 
 1. Run the tool in dry-run mode:
    ```bash
-   python3 src/main.py /path/to/your/php/project --dry-run
+   php php/src/main.php /path/to/your/php/project --dry-run
    ```
 
 2. Check the output to ensure that:
@@ -148,7 +145,7 @@ After setting up Claude with MCP, you should test the integration:
 
 3. If everything looks good, run the tool without the dry-run flag to apply the fixes:
    ```bash
-   python3 src/main.py /path/to/your/php/project
+   php php/src/main.php /path/to/your/php/project
    ```
 
 ## Troubleshooting
