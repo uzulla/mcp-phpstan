@@ -12,10 +12,10 @@ class Logger
     }
 
     // Parameter type missing
-    public function log($message): bool
+    public function log(string $message): bool
     {
         // Undefined constant
-        if (DEBUG_MODE) {
+        if (defined("DEBUG_MODE") && DEBUG_MODE) {
             echo $message . PHP_EOL;
         }
 

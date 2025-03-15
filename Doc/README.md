@@ -23,6 +23,7 @@ The tool processes errors incrementally, handling a small batch at a time to pre
 - Composer
 - PHPStan installed in your PHP project
 - Access to Claude Code with MCP support
+- Claude API key
 
 ### Setup
 
@@ -47,11 +48,34 @@ The tool processes errors incrementally, handling a small batch at a time to pre
        - src" > phpstan.neon
    ```
 
+4. Set up your Claude API key:
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   
+   # Edit the .env file and add your Claude API key
+   # Replace 'your_api_key_here' with your actual API key
+   echo "CLAUDE_API_KEY=your_api_key_here" >> .env
+   ```
+   
+   Alternatively, you can set the API key as an environment variable:
+   ```bash
+   export CLAUDE_API_KEY=your_api_key_here
+   ```
+
 ## Usage
 
 ### Basic Usage
 
-Run the tool on your PHP project:
+The easiest way to use the tool is with the provided script:
+
+```bash
+./run_tui.sh /path/to/your/php/project
+```
+
+This will start the Text User Interface (TUI) for interacting with the tool.
+
+You can also run the core tool directly:
 
 ```bash
 python3 src/main.py /path/to/your/php/project

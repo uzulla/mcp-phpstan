@@ -6,13 +6,15 @@ class User
 {
     private string $name;
     private ?int $age;
+    /** @var array<string> */
     private array $roles;
 
     public function __construct(string $name, ?int $age = null)
     {
         $this->name = $name;
         $this->age = $age;
-        // Missing initialization of $roles property
+        $this->roles = [];
+        // Roles property initialized
     }
 
     public function getName(): string
@@ -26,7 +28,8 @@ class User
     }
 
     // Return type mismatch - should be array
-    public function getRoles(): string
+    /** @return array<string> */
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -40,6 +43,6 @@ class User
     // Undefined variable usage
     public function hasRole(string $roleName): bool
     {
-        return in_array($roleName, $roles);
+        return in_array($roleName, $this->roles);
     }
 }
