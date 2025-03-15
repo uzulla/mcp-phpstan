@@ -7,14 +7,14 @@ class User
     private string $name;
     private ?int $age;
     /** @var array<string> */
-private array $roles = [];
+    private array $roles;
 
     public function __construct(string $name, ?int $age = null)
     {
         $this->name = $name;
         $this->age = $age;
         $this->roles = [];
-        // Missing initialization of $roles property
+        // Roles property initialized
     }
 
     public function getName(): string
@@ -29,7 +29,7 @@ private array $roles = [];
 
     // Return type mismatch - should be array
     /** @return array<string> */
-public function getRoles(): array
+    public function getRoles(): array
     {
         return $this->roles;
     }

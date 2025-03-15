@@ -1,0 +1,84 @@
+{
+  "name": "phpstan-mcp",
+  "description": "PHPStan integration for fixing PHP code errors",
+  "version": "1.0.0",
+  "commands": [
+    {
+      "name": "run_phpstan",
+      "description": "Run PHPStan analysis on a PHP project",
+      "parameters": {
+        "project_path": {
+          "type": "string",
+          "description": "Path to the PHP project"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths to analyze (optional)"
+        },
+        "level": {
+          "type": "integer",
+          "description": "PHPStan rule level (0-9) (optional)"
+        },
+        "config_path": {
+          "type": "string",
+          "description": "Path to PHPStan config file (optional)"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Whether to run in verbose mode (optional)"
+        }
+      }
+    },
+    {
+      "name": "fix_errors",
+      "description": "Fix errors detected by PHPStan",
+      "parameters": {
+        "batch_index": {
+          "type": "integer",
+          "description": "Index of the batch to fix (optional)"
+        },
+        "error_indices": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Indices of errors to fix (optional)"
+        }
+      }
+    },
+    {
+      "name": "list_errors",
+      "description": "List errors detected by PHPStan",
+      "parameters": {
+        "batch_index": {
+          "type": "integer",
+          "description": "Index of the batch to list (optional)"
+        },
+        "max_errors": {
+          "type": "integer",
+          "description": "Maximum number of errors to list (optional)"
+        }
+      }
+    },
+    {
+      "name": "select_errors",
+      "description": "Select specific errors to fix",
+      "parameters": {
+        "batch_index": {
+          "type": "integer",
+          "description": "Index of the batch to select from (optional)"
+        },
+        "error_indices": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Indices of errors to select"
+        }
+      }
+    }
+  ]
+}
