@@ -52,9 +52,10 @@ class IncrementalProcessorTest extends TestCase
     public function testProcessorWithMockData(): void
     {
         // Create a mock processor using a test double
+        $projectPath = realpath(__DIR__ . '/../..') . '/samples/php_project';
         $mockProcessor = $this->getMockBuilder(IncrementalProcessor::class)
             ->setConstructorArgs([
-                '/tmp/mock_project',
+                $projectPath,
                 2,  // max_errors_per_batch
                 2,  // max_iterations
                 null, // phpstan_binary
