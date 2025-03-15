@@ -1,0 +1,1 @@
+# MCP PHPStan Integration
