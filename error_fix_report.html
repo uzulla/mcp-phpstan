@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PHPStan Error Fixing Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .summary-item {
+            padding: 15px;
+            border-radius: 5px;
+            width: 200px;
+        }
+        .error-fix {
+            background-color: #f9f9f9;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .error-fix h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .code {
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .before {
+            background-color: #ffeeee;
+            border-left: 3px solid #e74c3c;
+        }
+        .after {
+            background-color: #eeffee;
+            border-left: 3px solid #2ecc71;
+        }
+        .file-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .steps {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .steps ol {
+            padding-left: 20px;
+        }
+        .steps li {
+            margin-bottom: 10px;
+        }
+        .conclusion {
+            font-style: italic;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PHPStan Error Fixing Report</h1>
+            <p>This report shows how the MCP PHPStan Integration tool fixed PHP code errors.</p>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-item" style="background-color: #ffeeee;">
+                <h3>Initial Errors</h3>
+                <p style="font-size: 24px; font-weight: bold;">13</p>
+            </div>
+            <div class="summary-item" style="background-color: #eeffee;">
+                <h3>Final Errors</h3>
+                <p style="font-size: 24px; font-weight: bold;">0</p>
+            </div>
+        </div>
+
+        <div class="file-section">
+            <h2>UserController.php</h2>
+
+            <div class="error-fix">
+                <h3>Undefined variable (Line 20)</h3>
+                <p><strong>Explanation:</strong> Replaced undefined variable $userName with $data['name'] from the function parameter.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">$this-&gt;logger-&gt;log(&quot;Creating user: &quot; . $userName);</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">$this-&gt;logger-&gt;log(&quot;Creating user: &quot; . $data[&quot;name&quot;]);</div>
+                </div>
+            </div>
+
+            <div class="error-fix">
+                <h3>Undefined method (Line 36)</h3>
+                <p><strong>Explanation:</strong> Commented out call to undefined method setEmail().</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">$user-&gt;setEmail($data[&#x27;email&#x27;] ?? &#x27;&#x27;);</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">// $user-&gt;setEmail($data[&#x27;email&#x27;] ?? &#x27;&#x27;); // Method does not exist in User class</div>
+                </div>
+            </div>
+
+            <div class="error-fix">
+                <h3>No value type in array (Line 18)</h3>
+                <p><strong>Explanation:</strong> Added PHPDoc with type information for the array parameter.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">public function createUser(array $data = []): User</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">/**
+ * @param array&lt;string, mixed&gt; $data
+ */
+public function createUser(array $data = []): User</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="file-section">
+            <h2>Logger.php</h2>
+
+            <div class="error-fix">
+                <h3>Constant not found (Line 18)</h3>
+                <p><strong>Explanation:</strong> Added check with defined() function to prevent undefined constant error.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">if (DEBUG_MODE) {</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">if (defined(&quot;DEBUG_MODE&quot;) &amp;&amp; DEBUG_MODE) {</div>
+                </div>
+            </div>
+
+            <div class="error-fix">
+                <h3>Parameter with no type (Line 15)</h3>
+                <p><strong>Explanation:</strong> Added string type to the $message parameter.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">public function log($message): bool</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">public function log(string $message): bool</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="file-section">
+            <h2>User.php</h2>
+
+            <div class="error-fix">
+                <h3>Undefined variable (Line 43)</h3>
+                <p><strong>Explanation:</strong> Replaced $roles with $this->roles to access the class property.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">return in_array($roleName, $roles);</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">return in_array($roleName, $this-&gt;roles);</div>
+                </div>
+            </div>
+
+            <div class="error-fix">
+                <h3>Return type mismatch (Line 31)</h3>
+                <p><strong>Explanation:</strong> Changed return type from string to array to match the actual return value.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">public function getRoles(): string</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">public function getRoles(): array</div>
+                </div>
+            </div>
+
+            <div class="error-fix">
+                <h3>No value type in array (Line 9)</h3>
+                <p><strong>Explanation:</strong> Added PHPDoc with type information for the array property.</p>
+                
+                <div class="code-container">
+                    <h4>Before:</h4>
+                    <div class="code before">private array $roles = [];</div>
+                    
+                    <h4>After:</h4>
+                    <div class="code after">/** @var array&lt;string&gt; */
+private array $roles = [];</div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>How MCP PHPStan Integration Works</h2>
+        <div class="steps">
+            <ol>
+                <li><strong>Error Detection:</strong> The tool runs PHPStan on the PHP project and captures the errors</li>
+                <li><strong>Error Formatting:</strong> The errors are formatted into a structure suitable for Claude</li>
+                <li><strong>Error Batching:</strong> Errors are processed in small batches to prevent overwhelming Claude</li>
+                <li><strong>Fix Generation:</strong> Claude analyzes the errors and suggests fixes</li>
+                <li><strong>Fix Application:</strong> The suggested fixes are applied to the PHP files</li>
+                <li><strong>Verification:</strong> PHPStan is run again to verify the fixes</li>
+                <li><strong>Iteration:</strong> The process repeats until all errors are fixed</li>
+            </ol>
+            <p class="conclusion">This incremental approach ensures that errors are fixed systematically and efficiently.</p>
+        </div>
+    </div>
+</body>
+</html>
