@@ -134,8 +134,10 @@ class SimpleClient:
         Returns:
             True if fixes were applied successfully, False otherwise
         """
-        batch_idx = batch["batch"]["index"]
-        total_batches = batch["batch"]["total"]
+        # Get batch information safely with defaults
+        batch_info = batch.get("batch", {})
+        batch_idx = batch_info.get("index", 0)
+        total_batches = batch_info.get("total", 1)
         
         self.add_log(f"Processing batch {batch_idx + 1}/{total_batches}...")
         

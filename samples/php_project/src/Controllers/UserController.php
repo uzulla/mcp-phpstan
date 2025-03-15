@@ -17,7 +17,7 @@ class UserController
     public function createUser(array $data): User
     {
         // Undefined variable
-        $this->logger->log("Creating user: " . $userName);
+        $this->logger->log("Creating user: " . $user->getName());
 
         // Missing required parameter
         $user = new User();
@@ -38,10 +38,10 @@ class UserController
     public function getUser(int $id)
     {
         // Undefined class
-        $repository = new UserRepository();
+        $repository = new \App\Repositories\UserRepository();
         
         // Method call on non-object
-        $result->fetch($id);
+        $result = $user->save();->fetch($id);
         
         return new User('Test User', 30);
     }

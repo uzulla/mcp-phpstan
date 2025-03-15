@@ -15,7 +15,7 @@ class Logger
     public function log($message): bool
     {
         // Undefined constant
-        if (DEBUG_MODE) {
+        if (defined('DEBUG_MODE') && DEBUG_MODE) {
             echo $message . PHP_EOL;
         }
 
