@@ -71,8 +71,9 @@ class McpClientTest extends TestCase
     public function testMcpClientWithMockData(): void
     {
         // Create a mock client
+        $projectPath = realpath(__DIR__ . '/../../..') . '/samples/php_project';
         $mockClient = $this->getMockBuilder(McpClient::class)
-            ->setConstructorArgs(['/tmp/mock_project', 3])
+            ->setConstructorArgs([$projectPath, 3])
             ->onlyMethods(['sendToClaude'])
             ->getMock();
         

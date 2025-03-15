@@ -93,7 +93,7 @@ EOT;
         $this->assertEquals('Property User::$email type has no value type specified in iterable type array.', $errors[0]->toArray()['message']);
         $this->assertEquals('src/Models/User.php', $errors[0]->toArray()['file']);
         $this->assertEquals(15, $errors[0]->toArray()['line']);
-        $this->assertEquals('missing_type', $errors[0]->toArray()['error_type']);
+        $this->assertEquals('type_error', $errors[0]->toArray()['error_type']);
         
         // Format for MCP and verify the structure
         $formatted = $formatter->formatForMcp($errors, 0);

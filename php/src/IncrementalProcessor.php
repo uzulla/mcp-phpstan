@@ -58,7 +58,11 @@ class IncrementalProcessor
             'iterations' => 0,
             'total_errors_fixed' => 0,
             'total_batches_processed' => 0,
-            'errors_by_type' => []
+            'errors_by_type' => [],
+            'files_with_errors' => [],
+            'start_time' => time(),
+            'last_processed_batch' => -1,
+            'last_processed_time' => 0
         ];
     }
 
@@ -210,6 +214,21 @@ class IncrementalProcessor
                 }
                 
                 $this->stats['errors_by_type'][$errorType]++;
+            }
+        }
+        
+        // Track additional statistics like in Python implementation
+        $this->stats['last_processed_batch'] = $batch['batch']['index'];
+        $this->stats['last_processed_time'] = time();
+        
+        // Track files with errors
+        if (!isset($this->stats['files_with_errors'])) {
+            $this->stats['files_with_errors'] = [];
+        }
+        
+        foreach (array_keys($batch['errors_by_file']) as $filePath) {
+            if (!in_array($filePath, $this->stats['files_with_errors'])) {
+                $this->stats['files_with_errors'][] = $filePath;
             }
         }
     }

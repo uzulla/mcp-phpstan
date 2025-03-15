@@ -14,7 +14,11 @@
   "autoload": {
     "psr-4": {
       "MCP\\PHPStan\\": "src/"
-    }
+    },
+    "files": [
+      "src/PhpStanRunner/functions.php",
+      "src/ErrorFormatter/functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

@@ -181,9 +181,45 @@ class McpClient
         echo "Applying fixes suggested by Claude:\n";
         echo json_encode($fixes, JSON_PRETTY_PRINT) . "\n";
         
-        // This is where the actual fix application would happen
-        // For now, just return success
-        return true;
+        $success = true;
+        
+        foreach ($fixes as $fix) {
+            $filePath = $this->projectPath . '/' . $fix['file'];
+            
+            if (!file_exists($filePath)) {
+                echo "Error: File {$fix['file']} not found\n";
+                $success = false;
+                continue;
+            }
+            
+            try {
+                // Read the file content
+                $content = file_get_contents($filePath);
+                
+                // Get the line to replace
+                $lines = explode("\n", $content);
+                $lineIndex = $fix['line'] - 1;
+                
+                if (!isset($lines[$lineIndex])) {
+                    echo "Error: Line {$fix['line']} not found in {$fix['file']}\n";
+                    $success = false;
+                    continue;
+                }
+                
+                // Replace the line
+                $lines[$lineIndex] = $fix['fixed'];
+                
+                // Write the updated content back to the file
+                file_put_contents($filePath, implode("\n", $lines));
+                
+                echo "Fixed {$fix['file']} line {$fix['line']}\n";
+            } catch (\Exception $e) {
+                echo "Error applying fix to {$fix['file']}: {$e->getMessage()}\n";
+                $success = false;
+            }
+        }
+        
+        return $success;
     }
 
     /**
