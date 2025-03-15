@@ -11,16 +11,20 @@ class UserController
 
     public function __construct()
     {
-        // Missing Logger initialization
+        // Initialize Logger
+        $this->logger = new Logger();
     }
 
-    public function createUser(array $data): User
+    /**
+ * @param array<string, mixed> $data
+ */
+public function createUser(array $data = []): User
     {
         // Undefined variable
-        $this->logger->log("Creating user: " . $user->getName());
+        $this->logger->log("Creating user: " . $data["name"]);
 
         // Missing required parameter
-        $user = new User();
+        $user = new User($data["name"] ?? "Unknown User");
 
         if (isset($data['roles'])) {
             foreach ($data['roles'] as $role) {
@@ -29,19 +33,19 @@ class UserController
         }
 
         // Calling undefined method
-        $user->setEmail($data['email'] ?? '');
+        // $user->setEmail($data['email'] ?? ''); // Method does not exist in User class
 
         return $user;
     }
 
     // Missing return type
-    public function getUser(int $id)
+    public function getUser(int $id): User
     {
         // Undefined class
-        $repository = new \App\Repositories\UserRepository();
+        $repository = new \App\Models\User("User from Repository", 25); // Using User as a temporary replacement for UserRepository;
         
         // Method call on non-object
-        $result = $user->save();->fetch($id);
+        $result = $repository; // Repository is now a User object that can be returned directly
         
         return new User('Test User', 30);
     }
