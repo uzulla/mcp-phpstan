@@ -42,12 +42,15 @@ This component is responsible for:
 - Preparing messages for Claude Code via MCP
 - Sending messages to Claude
 - Applying fixes suggested by Claude
+- Securely handling API credentials
 
 Key classes and functions:
 - `McpClient`: Class for interacting with Claude Code via MCP
 - `prepare_mcp_message()`: Method that prepares a message for Claude
-- `send_to_claude()`: Method that sends a message to Claude
+- `send_to_claude()`: Method that sends a message to Claude using environment variables for API keys
 - `apply_fixes()`: Method that applies fixes suggested by Claude
+
+The MCP Client uses the `python-dotenv` library to load API credentials from a `.env` file, ensuring that sensitive information is not hardcoded in the source code.
 
 ### Incremental Processor (`src/incremental_processor.py`)
 
