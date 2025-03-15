@@ -1,0 +1,24 @@
+{
+  "name": "uzulla/mcp-phpstan",
+  "description": "MCP PHPStan Integration - Automatically fix PHPStan errors with Claude Code",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0",
+    "phpstan/phpstan": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MCP\\PHPStan\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MCP\\PHPStan\\Tests\\": "tests/"
+    }
+  }
+}
