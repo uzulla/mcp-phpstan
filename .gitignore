@@ -10,3 +10,6 @@ phpstan.phar
 
 # PHP
 .phpunit.result.cache
+
+# Documentation
+Doc/
