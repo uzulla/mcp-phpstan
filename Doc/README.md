@@ -18,7 +18,6 @@ The tool processes errors incrementally, handling a small batch at a time to pre
 
 ### Prerequisites
 
-- Python 3.8+
 - PHP 7.4+
 - Composer
 - PHPStan installed in your PHP project
@@ -54,13 +53,13 @@ The tool processes errors incrementally, handling a small batch at a time to pre
 Run the tool on your PHP project:
 
 ```bash
-python3 src/main.py /path/to/your/php/project
+php php/src/main.php /path/to/your/php/project
 ```
 
 ### Advanced Options
 
 ```bash
-python3 src/main.py /path/to/your/php/project [options]
+php php/src/main.php /path/to/your/php/project [options]
 ```
 
 Options:
@@ -77,7 +76,7 @@ Options:
 For more control over the incremental processing:
 
 ```bash
-python3 src/incremental_processor.py /path/to/your/php/project [options]
+php php/src/IncrementalProcessor.php /path/to/your/php/project [options]
 ```
 
 Options:
