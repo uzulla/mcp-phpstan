@@ -47,11 +47,32 @@ class TuiClient:
         self.max_errors_per_batch = max_errors_per_batch
         self.max_iterations = max_iterations
         
+        # Check if .env file exists
+        env_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), '.env')
+        env_example_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), '.env.example')
+        
+        if not os.path.exists(env_file_path):
+            self.cleanup()
+            print("Error: .env file not found.")
+            print("Please create a .env file by copying .env.example:")
+            print("")
+            print(f"    cp {env_example_path} {env_file_path}")
+            print("")
+            print("Then edit the .env file and add your Claude API key:")
+            print("")
+            print("    CLAUDE_API_KEY=your_api_key_here")
+            print("")
+            sys.exit(1)
+            
         # Check if Claude API key is set
         if not os.environ.get("CLAUDE_API_KEY"):
             self.cleanup()
             print("Error: CLAUDE_API_KEY environment variable not set.")
-            print("Please set it in .env file or as an environment variable.")
+            print("Your .env file exists but may not contain the API key.")
+            print("Please add the following line to your .env file:")
+            print("")
+            print("    CLAUDE_API_KEY=your_api_key_here")
+            print("")
             sys.exit(1)
         
         # Initialize MCP client

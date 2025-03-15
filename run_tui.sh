@@ -7,11 +7,32 @@ if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
+# Check if .env file exists
+if [ ! -f .env ]; then
+    echo "Error: .env file not found."
+    echo "Please create a .env file by copying .env.example:"
+    echo ""
+    echo "    cp .env.example .env"
+    echo ""
+    echo "Then edit the .env file and add your Claude API key:"
+    echo ""
+    echo "    CLAUDE_API_KEY=your_api_key_here"
+    echo ""
+    exit 1
+fi
+
 # Check if CLAUDE_API_KEY is set
 if [ -z "$CLAUDE_API_KEY" ]; then
     echo "Error: CLAUDE_API_KEY environment variable not set."
-    echo "Please set it in .env file or before running this script:"
-    echo "export CLAUDE_API_KEY=your_api_key_here"
+    echo "Your .env file exists but may not contain the API key."
+    echo "Please add the following line to your .env file:"
+    echo ""
+    echo "    CLAUDE_API_KEY=your_api_key_here"
+    echo ""
+    echo "Or set it before running this script:"
+    echo ""
+    echo "    export CLAUDE_API_KEY=your_api_key_here"
+    echo ""
     exit 1
 fi
 

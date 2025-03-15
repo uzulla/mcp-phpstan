@@ -135,9 +135,18 @@ class McpClient:
             # Get API key from environment variable
             api_key = os.environ.get("CLAUDE_API_KEY")
             if not api_key:
+                # Check if .env file exists
+                env_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), '.env')
+                env_example_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), '.env.example')
+                
+                if os.path.exists(env_file_path):
+                    message = "CLAUDE_API_KEY environment variable not set. Your .env file exists but may not contain the API key. Please add CLAUDE_API_KEY=your_api_key_here to your .env file."
+                else:
+                    message = f"CLAUDE_API_KEY environment variable not set and .env file not found. Please create a .env file by copying .env.example:\n\ncp {env_example_path} {env_file_path}\n\nThen edit the .env file and add your Claude API key: CLAUDE_API_KEY=your_api_key_here"
+                
                 return {
                     "status": "error",
-                    "message": "CLAUDE_API_KEY environment variable not set. Please set it in .env file or as an environment variable.",
+                    "message": message,
                     "fixes": []
                 }
             
