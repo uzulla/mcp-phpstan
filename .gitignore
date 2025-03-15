@@ -1,0 +1,12 @@
+# Composer
+vendor/
+*/vendor/
+samples/*/vendor/
+samples/vendor/
+
+# PHPStan
+phpstan.phar
+*.phar
+
+# PHP
+.phpunit.result.cache
